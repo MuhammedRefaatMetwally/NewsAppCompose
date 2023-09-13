@@ -15,10 +15,11 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="settingsTab">Settings</string>
-    <string name="language" translatable="true">Language</string>
+    <string name="language" translatable="true">Languages</string>
     <string name="english">English</string>
     <string name="arabic">Arabic</string>
     <string name="pick_your_category">Pick your category \n</string>
     <string name="of_interest">of interest</string>
     <string name="news_bar">News</string>
+    <string name="news_details">News Details</string>
 </resources>

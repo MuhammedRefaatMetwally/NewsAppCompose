@@ -30,7 +30,7 @@ import okhttp3.internal.platform.Platform
 @Composable
 fun DropdownMenuBox() {
     val context = LocalContext.current
-    val languages = arrayOf(context.getString(R.string.english),context.getString(R.string.arabic))
+    val languages = arrayOf(context.getString(R.string.arabic), context.getString(R.string.english))
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(context.getString(R.string.language)) }
 

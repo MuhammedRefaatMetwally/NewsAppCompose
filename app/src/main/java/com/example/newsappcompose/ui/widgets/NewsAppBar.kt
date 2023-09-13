@@ -1,6 +1,11 @@
 package com.example.newsappcompose.ui.widgets
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,15 +31,26 @@ fun CustomAppBar(
     title: String,
     modifier: Modifier = Modifier,
     colors: TopAppBarDefaults = TopAppBarDefaults,
+    isSearching : Boolean = false,
     leadingIcon: @Composable () -> Unit = {},
-
+    trailingIcons : @Composable() (RowScope.() -> Unit) = {},
     ) {
     CenterAlignedTopAppBar(
         title = {
-            Text(
-                text = title,
-                style = TextStyle(color = Color.White, fontSize = 24.sp)
-            )
+            if(isSearching){
+                Box(Modifier.fillMaxWidth().padding()){
+
+                }
+            }else{
+                Text(
+                    text = title,
+                    style = TextStyle(color = Color.White, fontSize = 24.sp)
+                )
+            }
+
+        },
+        actions = {
+            trailingIcons()
         },
         modifier = modifier.clip(
             RoundedCornerShape(
@@ -50,10 +66,7 @@ fun CustomAppBar(
             navigationIconContentColor = Color.White
         ),
         navigationIcon = {
-
             leadingIcon()
-
-
         }
     )
 }

@@ -1,4 +1,4 @@
-package com.route.newsappc38online.widgets
+package com.example.newsappcompose.ui.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -48,7 +48,6 @@ fun DrawerHeader() {
 @Composable
 fun DrawerBody(
     navController: NavHostController,
-    mainController: NavHostController,
     onCloseDrawer: () -> Unit,
 ) {
     Column(
@@ -64,7 +63,7 @@ fun DrawerBody(
             onCloseDrawer.invoke()
         }
         NewsDrawerItem(iconId = R.drawable.ic_settings , textId = R.string.settings){
-            mainController.navigate(NewsScreens.SettingScreen.name)
+            navController.navigate(NewsScreens.SettingScreen.name)
             onCloseDrawer.invoke()
         }
     }

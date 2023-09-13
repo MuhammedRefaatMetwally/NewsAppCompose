@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,7 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,40 +41,44 @@ import com.example.newsappcompose.ui.navigation_component.NewsScreens
 
 @Composable
 fun CategoriesContent(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 90.dp, end = 18.dp, bottom = 36.dp, start = 18.dp)
-    ) {
-        Text(
-            modifier = Modifier.padding(bottom = 32.dp),
-            text = stringResource(R.string.pick_your_category) +
-                    stringResource(R.string.of_interest),
-            style = TextStyle(
-                color = Color(0XFF4F5A69),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
-        LazyVerticalStaggeredGrid(
-            modifier = Modifier.fillMaxSize(),
-            columns = StaggeredGridCells.Fixed(2),
-            contentPadding = PaddingValues(24.dp),
-            horizontalArrangement = Arrangement.spacedBy(24.dp),
-            verticalItemSpacing = 24.dp
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .paint(painterResource(id = R.drawable.pattern), contentScale = ContentScale.FillBounds)){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 90.dp, end = 18.dp, bottom = 36.dp, start = 18.dp)
         ) {
-            items(Constants.categories.size) {
-                val item = Constants.categories[it]
-                CategoryCard(item = item, position = it){
-                    navController.navigate(NewsScreens.HomeScreen.name + "/${item.apiID}")
-                    //navController.popBackStack(NewsScreens.HomeScreen.name, inclusive = false)
+            Text(
+                modifier = Modifier.padding(bottom = 32.dp),
+                text = stringResource(R.string.pick_your_category) +
+                        stringResource(R.string.of_interest),
+                style = TextStyle(
+                    color = Color(0XFF4F5A69),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+            LazyVerticalStaggeredGrid(
+                modifier = Modifier.fillMaxSize(),
+                columns = StaggeredGridCells.Fixed(2),
+                contentPadding = PaddingValues(24.dp),
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
+                verticalItemSpacing = 24.dp
+            ) {
+                items(Constants.categories.size) {
+                    val item = Constants.categories[it]
+                    CategoryCard(item = item, position = it){
+                        navController.navigate(NewsScreens.HomeScreen.name + "/${item.apiID}")
+                        //navController.popBackStack(NewsScreens.HomeScreen.name, inclusive = false)
+                    }
+
                 }
-
             }
+
+
         }
-
-
     }
 }
 
@@ -91,22 +98,30 @@ fun CategoryCard(item: Category, position: Int , onClick : () -> Unit) {
                     bottomEnd = 0.dp
                 ) else
                     RoundedCornerShape(
-                        topStart =24.dp,
+                        topStart = 24.dp,
                         topEnd = 24.dp,
                         bottomEnd = 24.dp,
                         bottomStart = 0.dp
                     )
-            ).fillMaxHeight(.25F).fillMaxWidth(.5F).clickable {
+            )
+            .fillMaxHeight(.25F)
+            .fillMaxWidth(.5F)
+            .clickable {
                 onClick.invoke()
             }
 
     ) {
         Column(
-            modifier = Modifier.width(200.dp).height(150.dp).padding(8.dp),
+            modifier = Modifier
+                .width(200.dp)
+                .height(150.dp)
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                modifier = Modifier.fillMaxWidth(1F).fillMaxHeight(.7F),
+                modifier = Modifier
+                    .fillMaxWidth(1F)
+                    .fillMaxHeight(.7F),
                 painter = painterResource(id = item.drawableResId),
                 contentDescription = ""
             )
