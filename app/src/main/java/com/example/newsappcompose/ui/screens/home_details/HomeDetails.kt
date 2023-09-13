@@ -20,12 +20,9 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,9 +44,6 @@ import com.example.newsappcompose.R
 import com.example.newsappcompose.api.model.newsResponse.News
 import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 
-import com.example.newsappcompose.ui.widgets.CustomAppBar
-import com.example.newsappcompose.ui.widgets.CustomDrawer
-
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +59,10 @@ fun HomeDetails(navController: NavHostController) {
                 contentScale = ContentScale.FillBounds
             )
     }){
-        NewsAppBar(title = stringResource(R.string.news_details), iconContent = { Box() {}})
+        NewsAppBar(
+            title = stringResource(R.string.news_details),
+            iconContent = { Box() {}},
+        )
         Column(Modifier.padding(horizontal = 16.dp, vertical = 64.dp)) {
             GlideImage(modifier = Modifier
                 .fillMaxWidth()

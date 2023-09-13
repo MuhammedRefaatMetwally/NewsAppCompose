@@ -1,14 +1,13 @@
 package com.example.newsappcompose.ui.screens.categoires
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Icon
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -28,8 +27,6 @@ import androidx.navigation.NavHostController
 import com.example.newsappcompose.R
 import com.example.newsappcompose.ui.widgets.CategoriesContent
 import com.example.newsappcompose.ui.widgets.CustomDrawer
-import com.example.newsappcompose.ui.widgets.DrawerBody
-import com.example.newsappcompose.ui.widgets.DrawerHeader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -57,49 +54,15 @@ fun CategoriesNews(navController: NavHostController) {
 fun NewsDrawer(drawerState: DrawerState, navController: NavHostController, scope: CoroutineScope) {
     CustomDrawer(scope = scope, navController = navController, drawerState = drawerState,
         topBar = {
-            NewsAppBar(drawerState, title = stringResource(R.string.news_bar))
+            NewsAppBar(
+                drawerState,
+                title = stringResource(R.string.news_bar),
+            )
         }
     ) {
         CategoriesContent(navController = navController)
     }
 
-    /* ModalNavigationDrawer(drawerContent = {
-
-
-     }, drawerState = drawerState) {
-         Scaffold(
-             topBar = {  }
-         ) {
-       val  padding = it
-             NavHost(
-                 navController = navController,
-                 startDestination = NewsScreens.CategoriesScreen.name
-             ) {
-
-                 composable(NewsScreens.CategoriesScreen.name) {
-
-                 }
-
-                 composable(
-                     NewsScreens.HomeScreen.name + "/{category}",
-                     arguments = listOf(navArgument("category") {
-                         type = NavType.StringType
-                     })
-                 ) {
-                     val argument = it.arguments?.getString("category")
-                     Log.d("test", argument.toString())
-                     NewsFragment(argument, navController = navController)
-                 }
-                 composable(NewsScreens.HomeDetailsScreen.name){
-
-                     HomeDetails(navController = navController)
-                 }
-
-             }
-
-         }
-
-     }*/
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -109,9 +72,7 @@ fun NewsAppBar(
     title: String,
     iconContent: @Composable () -> Unit = {
         Icon(
-            modifier = Modifier
-                .width(32.dp)
-                .height(32.dp),
+            modifier =Modifier.size(32.dp),
             painter = painterResource(id = R.drawable.ic_menu),
             contentDescription = "Icon Navigation"
         )

@@ -70,7 +70,7 @@ fun CategoriesContent(navController: NavHostController) {
                 items(Constants.categories.size) {
                     val item = Constants.categories[it]
                     CategoryCard(item = item, position = it){
-                        navController.navigate(NewsScreens.HomeScreen.name + "/${item.apiID}")
+                        navController.navigate(NewsScreens.HomeScreen.name + "/${item.apiID}" + "/${item.titleResID}" )
                         //navController.popBackStack(NewsScreens.HomeScreen.name, inclusive = false)
                     }
 

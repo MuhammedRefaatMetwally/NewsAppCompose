@@ -33,7 +33,10 @@ fun Settings(navController: NavHostController) {
            .paint(painter = painterResource(id = R.drawable.pattern) , contentScale = ContentScale.FillBounds)
    }) {
       CustomDrawer(drawerState = drawerState,navController = navController, topBar = {
-          NewsAppBar(drawerState = drawerState,title = stringResource(id = R.string.settings) )
+          NewsAppBar(
+              drawerState = drawerState,
+              title = stringResource(id = R.string.settings),
+          )
       },
           ){
           Column() {

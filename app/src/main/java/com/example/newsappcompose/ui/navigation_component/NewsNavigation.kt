@@ -1,7 +1,6 @@
 package com.example.newsappcompose.ui.navigation_component
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -29,14 +28,16 @@ fun NewsNavigation() {
         }
 
         composable(
-            NewsScreens.HomeScreen.name + "/{category}",
+            NewsScreens.HomeScreen.name + "/{category}" + "/{catName}",
             arguments = listOf(navArgument("category") {
                 type = NavType.StringType
+            },navArgument("catName") {
+                type = NavType.IntType
             })
         ) {
-            val argument = it.arguments?.getString("category")
-            Log.d("test", argument.toString())
-            NewsFragment(argument, navController = navController)
+            val category = it.arguments?.getString("category")
+            val catName = it.arguments?.getInt("catName")
+            NewsFragment(category, navController = navController,catName = catName)
         }
 
         composable(NewsScreens.HomeDetailsScreen.name){

@@ -21,9 +21,10 @@ import retrofit2.Response
 
 class NewsViewModel : ViewModel() {
     val sourcesList: MutableState<List<Source?>?> = mutableStateOf(emptyList())
-
+    val sourceNews: MutableState<Source> = mutableStateOf(Source())
 
     val newsList: MutableState<List<News?>?> = mutableStateOf(emptyList())
+    val searchList: MutableState<List<News?>?> = mutableStateOf(emptyList())
 
     var selectedIndex = mutableIntStateOf(0)
     val pageSize = mutableIntStateOf(20)
@@ -53,10 +54,12 @@ class NewsViewModel : ViewModel() {
             )
     }
 
-    fun getNewsBySources(source: Source?, newsList: MutableState<List<News?>?>) {
-        ApiManager.getApis().getNewsBySource(
+    fun getNewsBySources(source: Source?, newsList: MutableState<List<News?>?>,searchText : MutableState<String> = mutableStateOf("")) {
+        sourceNews.value = source ?: Source()
+
+        ApiManager.getApis().getNewsBySource(searchText =searchText.value ,
             sources = source?.id ?: "", pageSize = pageSize.intValue,
-            page = page.intValue
+            page = page.intValue,
         ).enqueue(
             object : Callback<NewsResponse> {
                 override fun onResponse(
@@ -75,4 +78,22 @@ class NewsViewModel : ViewModel() {
         )
     }
 
+    fun getNewsBySearch(searchText : MutableState<String>,searchList: MutableState<List<News?>?>){
+        ApiManager.getApis().getNewsBySearch(searchText = searchText.value).enqueue(object : Callback<NewsResponse>{
+            override fun onResponse(
+                call: Call<NewsResponse>,
+                response: Response<NewsResponse>
+            ) {
+                searchList.value = response.body()?.articles ?: emptyList()
+                Log.d("Search NEws" , searchList.value.toString())
+            }
+
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+
+            }
+
+        })
+    }
+
 }
+
