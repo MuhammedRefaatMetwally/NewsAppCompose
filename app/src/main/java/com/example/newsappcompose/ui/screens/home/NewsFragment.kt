@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,6 +49,7 @@ import com.example.newsappcompose.api.model.newsResponse.News
 import com.example.newsappcompose.api.model.sourceResponse.Source
 import com.example.newsappcompose.ui.navigation_component.NewsScreens
 import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
+import com.example.newsappcompose.ui.widgets.CircularProgressAnimated
 import com.example.newsappcompose.ui.widgets.CustomDrawer
 import com.example.newsappcompose.ui.widgets.SearchBar
 import java.util.Locale
@@ -115,14 +118,20 @@ fun NewsFragment(
 
             }
         ) {
-            Column(modifier = Modifier.padding(top = 80.dp, bottom = 32.dp)) {
-                NewsSourcesTabs(viewModel.sourcesList.value, viewModel.newsList, viewModel)
-                NewsList(
-                    searchNews = viewModel.searchList.value ?: emptyList(),
-                    isSearching = isSearching,
-                    news = viewModel.newsList.value ?: emptyList(),
-                    navController = navController,
-                )
+            Column(modifier = Modifier.padding(top = 80.dp, bottom = 32.dp)
+                .fillMaxSize()) {
+                if(viewModel.isLoading.value){
+                    CircularProgressAnimated(viewModel.isLoading.value)
+                }else{
+
+                    NewsSourcesTabs(viewModel.sourcesList.value, viewModel.newsList , viewModel)
+                    NewsList(
+                        searchNews = viewModel.searchList.value ?: emptyList(),
+                        isSearching = isSearching,
+                        news = viewModel.newsList.value ?: emptyList(),
+                        navController = navController,
+                    )
+                }
             }
         }
     }

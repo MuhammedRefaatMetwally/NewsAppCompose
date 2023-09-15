@@ -25,14 +25,14 @@ class NewsViewModel : ViewModel() {
 
     val newsList: MutableState<List<News?>?> = mutableStateOf(emptyList())
     val searchList: MutableState<List<News?>?> = mutableStateOf(emptyList())
-
+    val isLoading : MutableState<Boolean> = mutableStateOf(false)
     var selectedIndex = mutableIntStateOf(0)
     val pageSize = mutableIntStateOf(20)
     var page = mutableIntStateOf(1)
 
 
     fun getSourcesByCategory(category: String?, sourcesList: MutableState<List<Source?>?>) {
-
+        isLoading.value = true
         ApiManager
             .getApis()
             .getSourcesByCategory(category = category ?: "")
@@ -52,11 +52,12 @@ class NewsViewModel : ViewModel() {
 
             }
             )
+        isLoading.value = false
     }
 
     fun getNewsBySources(source: Source?, newsList: MutableState<List<News?>?>,searchText : MutableState<String> = mutableStateOf("")) {
         sourceNews.value = source ?: Source()
-
+        isLoading.value = true
         ApiManager.getApis().getNewsBySource(searchText =searchText.value ,
             sources = source?.id ?: "", pageSize = pageSize.intValue,
             page = page.intValue,
@@ -66,6 +67,7 @@ class NewsViewModel : ViewModel() {
                     call: Call<NewsResponse>,
                     response: Response<NewsResponse>
                 ) {
+
                     newsList.value = response.body()?.articles ?: emptyList()
 
                 }
@@ -76,14 +78,18 @@ class NewsViewModel : ViewModel() {
 
             }
         )
+
+        isLoading.value = false
     }
 
     fun getNewsBySearch(searchText : MutableState<String>,searchList: MutableState<List<News?>?>){
+        isLoading.value = true
         ApiManager.getApis().getNewsBySearch(searchText = searchText.value).enqueue(object : Callback<NewsResponse>{
             override fun onResponse(
                 call: Call<NewsResponse>,
                 response: Response<NewsResponse>
             ) {
+
                 searchList.value = response.body()?.articles ?: emptyList()
                 Log.d("Search NEws" , searchList.value.toString())
             }
@@ -93,6 +99,7 @@ class NewsViewModel : ViewModel() {
             }
 
         })
+        isLoading.value = false
     }
 
 }
