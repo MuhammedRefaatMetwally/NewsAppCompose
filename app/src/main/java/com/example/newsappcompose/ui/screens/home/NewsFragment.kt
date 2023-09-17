@@ -86,6 +86,7 @@ fun NewsFragment(
                         onSearchTextChanged = { text ->
                             searchText.value = text
                             Log.d("text ", searchText.value)
+                            viewModel.getNewsBySearch( searchList = viewModel.searchList,searchText = searchText)
                         },
                         onSearchClick = {
                             isSearching.value = true

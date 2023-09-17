@@ -43,6 +43,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.newsappcompose.R
 import com.example.newsappcompose.api.model.newsResponse.News
 import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
+import com.example.newsappcompose.ui.utils.formatDate
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
@@ -50,7 +51,6 @@ import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 fun HomeDetails(navController: NavHostController) {
     val news = navController.previousBackStackEntry?.savedStateHandle?.get<News>("news")
     val context = LocalContext.current
-    Log.d("news" , news.toString())
 
     Box(modifier = with (Modifier){
         fillMaxSize()
