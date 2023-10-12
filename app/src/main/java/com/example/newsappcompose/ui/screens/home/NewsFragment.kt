@@ -40,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -52,6 +53,7 @@ import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 import com.example.newsappcompose.ui.widgets.CircularProgressAnimated
 import com.example.newsappcompose.ui.widgets.CustomDrawer
 import com.example.newsappcompose.ui.widgets.SearchBar
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 
@@ -59,7 +61,7 @@ import java.util.Locale
 @Composable
 fun NewsFragment(
     category: String?,
-    viewModel: NewsViewModel = viewModel(),
+    viewModel: NewsViewModel = hiltViewModel(),
     navController: NavHostController,
     catName: Int?,
 ) {
@@ -119,7 +121,8 @@ fun NewsFragment(
 
             }
         ) {
-            Column(modifier = Modifier.padding(top = 80.dp, bottom = 32.dp)
+            Column(modifier = Modifier
+                .padding(top = 80.dp, bottom = 32.dp)
                 .fillMaxSize()) {
                 if(viewModel.isLoading.value){
                     CircularProgressAnimated(viewModel.isLoading.value)

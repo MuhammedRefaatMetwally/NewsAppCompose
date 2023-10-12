@@ -14,19 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.core.os.LocaleListCompat
 import com.example.newsappcompose.ui.navigation_component.NewsNavigation
 import com.example.newsappcompose.ui.ui.theme.NewsAppComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
 
-      /*  val config = resources.configuration
-        val locale = Locale("en")
-        Locale.setDefault(locale)
-        config.setLocale(locale)
-
-        createConfigurationContext(config)
-        resources.updateConfiguration(config, resources.displayMetrics)*/
         super.onCreate(savedInstanceState)
         setContent {
           MyApp {
