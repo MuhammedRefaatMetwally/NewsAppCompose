@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NewsAppCompose</string>
+    <string name="arabic">الـعـربــيـة</string>
+    <string name="business">التجارة</string>
+    <string name="categories">الفــــــــــئــــــــــة</string>
+    <string name="english">الانـجـلـيـزيـة</string>
+    <string name="general">الشائع</string>
+    <string name="health">الصحة</string>
+    <string name="language" translatable="true">اللغة</string>
+    <string name="news">الأخــــبــــار</string>
+    <string name="news_app">الأخـــبــــار</string>
+    <string name="news_bar">الأخبار</string>
+    <string name="news_details">تـــفـــاصــيــل الأخــــبـــــار</string>
+    <string name="of_interest">الــمــــفــــضــــلـة لـــــــديـــــــك</string>
+    <string name="pick_your_category">اختر الفــــئــــة \n</string>
+    <string name="route_news">Route News</string>
+    <string name="science">العلوم</string>
+    <string name="search_article">ابـــحـــث عــــــن مــــقــــال</string>
+    <string name="settings">الاعــدادات</string>
+    <string name="settingsTab">الاعدادات</string>
+    <string name="sports">الرياضة</string>
+    <string name="technology">التكنولوجيا</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+</resources>
