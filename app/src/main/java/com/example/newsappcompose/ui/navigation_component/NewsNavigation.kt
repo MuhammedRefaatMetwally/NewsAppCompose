@@ -12,7 +12,7 @@ import com.example.newsappcompose.ui.screens.categoires.CategoriesNews
 import com.example.newsappcompose.ui.screens.home.NewsFragment
 import com.example.newsappcompose.ui.screens.home_details.HomeDetails
 import com.example.newsappcompose.ui.screens.settings.Settings
-import com.example.newsappcompose.ui.screens.settings.SplashContent
+import com.example.newsappcompose.ui.screens.splash.SplashContent
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable

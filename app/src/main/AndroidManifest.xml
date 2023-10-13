@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.screens.settings.SplashActivity"
+            android:name=".ui.screens.splash.SplashActivity"
             android:exported="true"
             android:label="SplashActivity"
             android:theme="@style/Theme.NewsAppCompose" />

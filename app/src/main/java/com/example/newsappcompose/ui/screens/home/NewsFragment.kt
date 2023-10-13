@@ -46,13 +46,14 @@ import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.newsappcompose.R
-import com.example.newsappcompose.api.model.newsResponse.News
-import com.example.newsappcompose.api.model.sourceResponse.Source
 import com.example.newsappcompose.ui.navigation_component.NewsScreens
 import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 import com.example.newsappcompose.ui.widgets.CircularProgressAnimated
 import com.example.newsappcompose.ui.widgets.CustomDrawer
 import com.example.newsappcompose.ui.widgets.SearchBar
+import com.route.data.models.Source
+import com.route.domain.entities.ArticlesItemDTO
+import com.route.domain.entities.SourceItemDTO
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -88,11 +89,11 @@ fun NewsFragment(
                         onSearchTextChanged = { text ->
                             searchText.value = text
                             Log.d("text ", searchText.value)
-                            viewModel.getNewsBySearch( searchList = viewModel.searchList,searchText = searchText)
+                            //viewModel.getNewsBySearch( searchList = viewModel.searchList,searchText = searchText)
                         },
                         onSearchClick = {
                             isSearching.value = true
-                            viewModel.getNewsBySearch( searchList = viewModel.searchList,searchText = searchText)
+                          //  viewModel.getNewsBySearch( searchList = viewModel.searchList,searchText = searchText)
                         },
                         onClose = {
                             isSearching.value = false
@@ -144,21 +145,21 @@ fun NewsFragment(
 
 @Composable
 fun NewsList(
-    news: List<News?>,
+    news: List<ArticlesItemDTO?>,
     navController: NavHostController,
     isSearching: MutableState<Boolean>,
-    searchNews: List<News?>,
+    searchNews: List<ArticlesItemDTO?>,
 ) {
          if(isSearching.value){
              LazyColumn(modifier = Modifier.padding(vertical = 16.dp)) {
                  items(searchNews.size) {
-                     NewsCard(article = searchNews[it] ?: News(), navController)
+                     NewsCard(article = searchNews[it] ?: ArticlesItemDTO(), navController)
                  }
              }
          }else{
              LazyColumn(modifier = Modifier.padding(vertical = 16.dp)) {
                  items(news.size) {
-                     NewsCard(article = news[it] ?: News(), navController)
+                     NewsCard(article = news[it] ?: ArticlesItemDTO(), navController)
                  }
              }
 
@@ -168,7 +169,7 @@ fun NewsList(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NewsCard(article: News, navController: NavHostController) {
+fun NewsCard(article: ArticlesItemDTO, navController: NavHostController) {
 
     Card(
         modifier = Modifier
@@ -207,8 +208,8 @@ fun NewsCard(article: News, navController: NavHostController) {
 
 @Composable
 fun NewsSourcesTabs(
-    sourcesItemsList: List<Source?>?,
-    newsList: MutableState<List<News?>?>,
+    sourcesItemsList: List<SourceItemDTO?>?,
+    newsList: MutableState<List<ArticlesItemDTO?>?>,
     viewModel: NewsViewModel = viewModel(),
 ) {
 

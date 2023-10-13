@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.newsappcompose.Category
 import com.example.newsappcompose.Constants
 import com.example.newsappcompose.R
-import com.example.newsappcompose.api.model.Category
 import com.example.newsappcompose.ui.navigation_component.NewsScreens
 
 @Composable
@@ -83,7 +83,7 @@ fun CategoriesContent(navController: NavHostController) {
 }
 
 @Composable
-fun CategoryCard(item: Category, position: Int , onClick : () -> Unit) {
+fun CategoryCard(item: Category, position: Int, onClick : () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = item.backgroundColor

@@ -1,4 +1,4 @@
-package com.example.newsappcompose.ui.screens.settings
+package com.example.newsappcompose.ui.screens.splash
 
 import android.os.Bundle
 import android.view.animation.OvershootInterpolator

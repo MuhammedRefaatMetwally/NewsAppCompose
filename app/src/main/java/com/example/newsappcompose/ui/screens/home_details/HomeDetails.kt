@@ -41,15 +41,15 @@ import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.newsappcompose.R
-import com.example.newsappcompose.api.model.newsResponse.News
 import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 import com.example.newsappcompose.ui.utils.formatDate
+import com.route.domain.entities.ArticlesItemDTO
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HomeDetails(navController: NavHostController) {
-    val news = navController.previousBackStackEntry?.savedStateHandle?.get<News>("news")
+    val news = navController.previousBackStackEntry?.savedStateHandle?.get<ArticlesItemDTO>("news")
     val context = LocalContext.current
 
     Box(modifier = with (Modifier){

@@ -1,14 +1,22 @@
 package com.example.newsappcompose
 
 import androidx.compose.ui.graphics.Color
-import com.example.newsappcompose.api.model.Category
+data class Category(
+    val apiID: String,
+    val drawableResId: Int,
+    val titleResID: Int,
+    val backgroundColor: Color,
+    val idColor: Int,
+)
 
 
 object Constants {
     val categories = listOf(
         Category(
-            "sports", R.drawable.ball,
-            R.string.sports, Color(0xFFC91C22),
+            "sports",
+            R.drawable.ball,
+            R.string.sports,
+            Color(0xFFC91C22),
             R.color.red
         ),
         Category(
