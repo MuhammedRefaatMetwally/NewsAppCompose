@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +16,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -51,13 +53,65 @@ import com.example.newsappcompose.ui.screens.categoires.NewsAppBar
 import com.example.newsappcompose.ui.widgets.CircularProgressAnimated
 import com.example.newsappcompose.ui.widgets.CustomDrawer
 import com.example.newsappcompose.ui.widgets.SearchBar
-import com.route.data.models.Source
 import com.route.domain.entities.ArticlesItemDTO
 import com.route.domain.entities.SourceItemDTO
-import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
+@Composable
+fun RenderStates(viewModel: NewsViewModel = hiltViewModel() , navController: NavHostController) {
+    when (val state = viewModel.state.value) {
+        is NewsContract.State.Loading -> {
+            NewsCircularLoading()
+        }
 
+        is NewsContract.State.Error -> {
+            NewsErrorDialog(errorMessage = state.message)
+        }
+
+        is NewsContract.State.Loaded -> {
+            Column {
+                NewsSourcesTabs(sourcesItemsList = state.sourcesList)
+                NewsList(news = state.newsList,navController)
+            }
+        }
+
+        is NewsContract.State.Idle -> {
+            // Initial State
+        }
+    }
+    when (viewModel.events.value) {
+        is NewsContract.Event.Idle -> {
+
+        }
+
+        is NewsContract.Event.NavigateToArticleDetails -> {
+
+        }
+    }
+}
+
+@Composable
+fun NewsCircularLoading() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(color = colorResource(id = R.color.brown_orange))
+    }
+}
+
+@Composable
+fun NewsErrorDialog(errorMessage: String) {
+    AlertDialog(onDismissRequest = { }, confirmButton = {
+        Button(onClick = {
+
+        }) {
+            Text(text = "OK")
+        }
+    }, title = {
+        Text(text = errorMessage)
+    })
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsFragment(
@@ -66,7 +120,8 @@ fun NewsFragment(
     navController: NavHostController,
     catName: Int?,
 ) {
-    viewModel.getSourcesByCategory(category, viewModel.sourcesList)
+   viewModel.handleActions(NewsContract.Actions.GetNewsSources(categoryID = category ?:""))
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isSearching = remember {
         mutableStateOf(false)
@@ -125,18 +180,7 @@ fun NewsFragment(
             Column(modifier = Modifier
                 .padding(top = 80.dp, bottom = 32.dp)
                 .fillMaxSize()) {
-                if(viewModel.isLoading.value){
-                    CircularProgressAnimated(viewModel.isLoading.value)
-                }else{
-
-                    NewsSourcesTabs(viewModel.sourcesList.value, viewModel.newsList , viewModel)
-                    NewsList(
-                        searchNews = viewModel.searchList.value ?: emptyList(),
-                        isSearching = isSearching,
-                        news = viewModel.newsList.value ?: emptyList(),
-                        navController = navController,
-                    )
-                }
+              RenderStates(navController = navController)
             }
         }
     }
@@ -146,24 +190,23 @@ fun NewsFragment(
 @Composable
 fun NewsList(
     news: List<ArticlesItemDTO?>,
-    navController: NavHostController,
-    isSearching: MutableState<Boolean>,
-    searchNews: List<ArticlesItemDTO?>,
-) {
-         if(isSearching.value){
+    navController: NavHostController, ) {
+       /*  if(isSearching.value){
              LazyColumn(modifier = Modifier.padding(vertical = 16.dp)) {
                  items(searchNews.size) {
                      NewsCard(article = searchNews[it] ?: ArticlesItemDTO(), navController)
                  }
              }
-         }else{
+         }else{*/
              LazyColumn(modifier = Modifier.padding(vertical = 16.dp)) {
                  items(news.size) {
                      NewsCard(article = news[it] ?: ArticlesItemDTO(), navController)
                  }
              }
 
-         }
+
+        // }
+
 
 }
 
@@ -209,7 +252,6 @@ fun NewsCard(article: ArticlesItemDTO, navController: NavHostController) {
 @Composable
 fun NewsSourcesTabs(
     sourcesItemsList: List<SourceItemDTO?>?,
-    newsList: MutableState<List<ArticlesItemDTO?>?>,
     viewModel: NewsViewModel = viewModel(),
 ) {
 
@@ -221,13 +263,13 @@ fun NewsSourcesTabs(
             indicator = {},
         ) {
             sourcesItemsList.forEachIndexed { index, sourceItem ->
-                if (viewModel.selectedIndex.intValue == index) {
-                    viewModel.getNewsBySources(source = sourceItem, newsList = newsList)
-                }
                 Tab(
                     selected = viewModel.selectedIndex.intValue == index,
                     onClick = {
                         viewModel.selectedIndex.intValue = index
+                        if (sourceItem != null) {
+                            viewModel.handleActions(NewsContract.Actions.GetNewsArticles(sourceID = sourceItem.id))
+                        }
                     },
                     selectedContentColor = Color.White,
                     unselectedContentColor = Color(0xFF39A552),
