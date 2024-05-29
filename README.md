@@ -39,9 +39,7 @@
 10. **Fetching News Based on Category** 📊
     - Cater to diverse interests with curated news categories.
     - Allow users to personalize their news feed.
-
----
-I hope this format works well for your GitHub README! If you need any further adjustments or have additional features to include, feel free to ask. 😊
+      
 # Feedback
 
 If you have any feedback, please reach out to me at muhammedrefaat2020@gmail.com .
